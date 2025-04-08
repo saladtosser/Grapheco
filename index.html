@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grapheco - Creative Design Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #6e45e2 0%, #88d3ce 100%);
+            color: white;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .design-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .circle-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+            background: linear-gradient(135deg, rgba(255, 87, 87, 0.2) 0%, rgba(255, 87, 51, 0.1) 100%);
+        }
+        
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2) 0%, rgba(58, 123, 213, 0.1) 100%);
+        }
+        
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            top: 30%;
+            left: 20%;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.2) 0%, rgba(245, 87, 108, 0.1) 100%);
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .logo {
+            height: 60px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s ease 0.5s forwards;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: pulse 2s infinite, fadeIn 1s ease 1.5s forwards;
+            z-index: 10;
+        }
+        
+        .about {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            position: relative;
+        }
+        
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, #6e45e2, transparent);
+            transform: translateX(-50%);
+        }
+        
+        .about.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .about h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #6e45e2;
+        }
+        
+        .about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #555;
+        }
+        
+        .color-bar {
+            display: flex;
+            width: 100%;
+            height: 10px;
+        }
+        
+        .color-segment {
+            flex: 1;
+            height: 100%;
+        }
+        
+        .color-1 { background-color: #ff5757; }
+        .color-2 { background-color: #ff9f57; }
+        .color-3 { background-color: #ffd757; }
+        .color-4 { background-color: #6ee75d; }
+        .color-5 { background-color: #57c7ff; }
+        .color-6 { background-color: #6e45e2; }
+        
+        .services {
+            padding: 80px 20px;
+            background-color: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .services h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-item {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        
+        .service-item:nth-child(1)::before { background-color: #ff5757; }
+        .service-item:nth-child(2)::before { background-color: #57c7ff; }
+        .service-item:nth-child(3)::before { background-color: #6ee75d; }
+        
+        .service-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .service-item p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        .contact {
+            background: linear-gradient(135deg, #333 0%, #111 100%);
+            color: white;
+            padding: 100px 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-design {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .contact-design-1 {
+            background: #6e45e2;
+            top: -200px;
+            right: -200px;
+        }
+        
+        .contact-design-2 {
+            background: #ff5757;
+            bottom: -200px;
+            left: -200px;
+        }
+        
+        .contact.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .contact-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .contact-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact-item a {
+            color: #57c7ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .contact-item a:hover {
+            color: white;
+        }
+        
+        footer {
+            background-color: #111;
+            color: #555;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .about h2, .contact h2, .services h2 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                height: 40px;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .contact-item {
+                min-width: auto;
+                padding: 20px;
+            }
+            
+            .circle-1, .circle-2, .circle-3 {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="design-element circle-1"></div>
+        <div class="design-element circle-2"></div>
+        <div class="design-element circle-3"></div>
+        <div class="logo-container">
+            <img src="/api/placeholder/200/60" alt="Grapheco Logo" class="logo">
+        </div>
+        <div class="hero-content">
+            <h1>Grapheco</h1>
+            <p>Crafting exceptional design solutions for brands that want to make an impact.</p>
+        </div>
+        <div class="scroll-down">Scroll Down</div>
+    </section>
+    
+    <div class="color-bar">
+        <div class="color-segment color-1"></div>
+        <div class="color-segment color-2"></div>
+        <div class="color-segment color-3"></div>
+        <div class="color-segment color-4"></div>
+        <div class="color-segment color-5"></div>
+        <div class="color-segment color-6"></div>
+    </div>
+    
+    <section class="about" id="about">
+        <h2>Who We Are</h2>
+        <p>At Grapheco, we are a passionate team of designers, strategists, and creatives dedicated to transforming ideas into compelling visual experiences. Our approach combines artistic vision with strategic thinking to deliver design solutions that captivate audiences and drive results.</p>
+        <p>From brand identity and digital design to print materials and marketing collateral, we craft each project with precision, innovation, and attention to detail. We believe that great design has the power to elevate brands, communicate complex ideas, and create meaningful connections.</p>
+    </section>
+    
+    <section class="services" id="services">
+        <div class="services-container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>Brand Identity</h3>
+                    <p>We create distinctive visual identities that reflect your brand's personality and values. From logos and color palettes to typography and brand guidelines, we'll help your brand stand out in a crowded marketplace.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Digital Design</h3>
+                    <p>Our digital design services include website design, UI/UX, app interfaces, and social media graphics. We create seamless digital experiences that engage users and drive conversions.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Print & Packaging</h3>
+                    <p>From business cards and brochures to product packaging and environmental graphics, we design print materials that make a lasting impression and effectively communicate your message.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact" id="contact">
+        <div class="contact-design contact-design-1"></div>
+        <div class="contact-design contact-design-2"></div>
+        <div class="contact-container">
+            <h2>Get In Touch</h2>
+            <p>Ready to start your next design project? Connect with us through any of these channels:</p>
+            
+            <div class="contact-links">
+                <div class="contact-item">
+                    <h3>WhatsApp</h3>
+                    <a href="https://wa.me/+9647778545101" target="_blank">+964 777 854 5101</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Facebook</h3>
+                    <a href="https://www.facebook.com/share/18RELi1Z99/?mibextid=wwXIfr" target="_blank">Grapheco</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <a href="mailto:Graphecoiq@gmail.com">Graphecoiq@gmail.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Instagram</h3>
+                    <a href="https://www.instagram.com/grapheco.iq" target="_blank">@grapheco.iq</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Grapheco. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Simple scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.about, .contact');
+            
+            function checkScroll() {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (sectionTop < windowHeight * 0.8) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Check positions initially
+            checkScroll();
+            
+            // Check positions on scroll
+            window.addEventListener('scroll', checkScroll);
+        });
+    </script>
+</body>
+</html>
